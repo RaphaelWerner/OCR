@@ -54,6 +54,7 @@ public class ResultOCR {
             int qtdBarra = 0;
             int count = 0;
             boolean auxNomeCNH = true;
+            boolean cpfdatanasci = true;
             for (TextBlock textBlock : textBlocks) {
                 if (textBlock != null && textBlock.getValue() != null) {
                     count++;
@@ -97,7 +98,7 @@ public class ResultOCR {
 
 
 
-                        boolean cpfdatanasci = true;
+
                         if (TipoDocumento == 1) {
 
                             // verificar se é um nome
@@ -131,7 +132,6 @@ public class ResultOCR {
                                     }
                                     OCRResult[1] = RG.replace(" ", "");
                                 } else {
-                                    OCRResult[1] = ";";
                                     OCRResult[1] = textBlock.getValue().replace(" ", "");
                                 }
 
@@ -168,15 +168,16 @@ public class ResultOCR {
                                         .replace("-", "");
                                 String year = "";
 
-                                for(int i = 4; i>0; i++){
+                                for(int i = 4; i>0; i--){
                                     year += auxDate.charAt(auxDate.length()-i);
                                 }
 
                                 if(Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(year) >= 18 ){
                                     OCRResult[3] = DN.replace(" ", "")
                                             .replace("-", "");
+                                    cpfdatanasci = false;
                                 }
-                                cpfdatanasci = false;
+
 
                             }
                         }
