@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "526271881173",
+    "firebase_url": "https://ocravgeo-7a0ff.firebaseio.com",
+    "project_id": "ocravgeo-7a0ff",
+    "storage_bucket": "ocravgeo-7a0ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526271881173:android:642c18accdc057ec",
+        "android_client_info": {
+          "package_name": "raphaelwerner.ocr_avgeo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526271881173-8c81gtrpqci6diogpu103ku0vcel830v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7af7-tnJuxk_TKm_E3MTSDLtSWOxuDi8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
