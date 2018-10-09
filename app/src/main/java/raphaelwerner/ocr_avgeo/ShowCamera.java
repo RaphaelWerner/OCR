@@ -23,7 +23,6 @@ public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback{
     private SurfaceHolder mSurfaceHolder;
     private Camera mCamera;
     private OnFocusListener onFocusListener;
-    ResultOCR resultOCR = new ResultOCR();
     private boolean needToTakePic = false;
     Context context;
 
@@ -103,9 +102,8 @@ public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback{
             e.printStackTrace();
         }
 
-        if (isNeedToTakePic()) {
             onFocusListener.onFocused();
-        }
+
     }
 
     @Override
@@ -129,84 +127,11 @@ public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback{
                     touchRect.bottom * 2000 / this.getHeight() - 1000);
 
             doTouchFocus(targetFocusRect);
-            capture();
-
         }
 
         return false;
     }
 
-    public void capture() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mCamera.takePicture(null, null, mPicture);
-                setNeedToTakePic(false);
-
-            }
-        }, 1500);
-    }
-    Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            File pictureFile = getOutputMediaFile();
-            if (pictureFile == null) {
-                return;
-            }
-            try {
-                FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
-                fos.close();
-
-                Bitmap bitmap = BitmapFactory.decodeFile("/storage/emulated/0/OCR/temp.jpg");
-                analyzePicture(bitmap);
-
-                camera.startPreview();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    private static File getOutputMediaFile() {
-
-        String state = Environment.getExternalStorageState();
-        if (!state.equals(Environment.MEDIA_MOUNTED)) {
-
-        } else {
-            File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "OCR");
-
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            File outputFile = new File(folder, "temp.jpg");
-            return outputFile;
-        }
-        return null;
-    }
-
-    private void analyzePicture(Bitmap bitmap){
-        int aux = 0;
-        String[] a = resultOCR.inspectFromBitmap(bitmap, context, 1);
-        for(int i = 0; i < a.length; i++){
-            if(a[i] == "" || a[i] == null){
-                aux++;
-            }
-        }
-        if(aux < 3){
-            Intent main = new Intent(context, MainActivity.class);
-            main.putExtra("OCR", a);
-            context.startActivity(main);
-        }
-
-    }
-
-
-    public boolean isNeedToTakePic() {
-        return needToTakePic;
-    }
 
     public void setNeedToTakePic(boolean needToTakePic) {
         this.needToTakePic = needToTakePic;
